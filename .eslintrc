@@ -16,6 +16,9 @@
     "react/no-danger": [0],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "import/newline-after-import": "off"
+    "import/newline-after-import": "off",
+    "react/function-component-definition": "off",
+    "arrow-body-style": [0],
+    "prefer-arrow-callback": [0]
   }
 }
