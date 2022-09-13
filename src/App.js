@@ -7,18 +7,15 @@ import Starred from './pages/Starred';
 function App() {
   // return <div className="App">Hi</div>;
   return (
-    <div>
-      <Navs />
-      <Switch>
-        <Route path="/home">
-          <Home />
-        </Route>
-        <Route path="/starred">
-          <Starred />
-        </Route>
-        <Route>Error 404</Route>
-      </Switch>
-    </div>
+    <Switch>
+      <Route exact path="/home">
+        <Home />
+      </Route>
+      <Route exact path="/starred">
+        <Starred />
+      </Route>
+      <Route>Error 404</Route>
+    </Switch>
   );
 }
 
