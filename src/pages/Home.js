@@ -4,16 +4,25 @@ import { apiGet } from '../misc/config';
 const Home = () => {
   const [input, setInput] = useState('');
   const [result, setResult] = useState(null);
+  const [searchOption, setSearchOption] = useState('shows');
+
+  const isShow = searchOption === 'shows';
 
   const onTextChange = ev => {
     // console.log(ev);
     setInput(ev.target.value);
     // console.log(input);
   };
+  const onRadioChange = ev => {
+    // console.log(ev);
+    setResult(null);
+    setSearchOption(ev.target.value);
+  };
   const onSearch = () => {
     // https://api.tvmaze.com/search/shows?q=girls
-    apiGet(`/search/shows?q=${input}`).then(res => {
+    apiGet(`/search/${searchOption}?q=${input}`).then(res => {
       setResult(res);
+      console.log(res);
     });
   };
   const onKeyDown = ev => {
@@ -26,10 +35,19 @@ const Home = () => {
       return <div>No Result </div>;
     }
     if (result && result.length > 0) {
+      if (searchOption === 'people') {
+        return (
+          <div>
+            {result.map(item => {
+              return <div key={item.person.id}>{item.person.name}</div>;
+            })}
+          </div>
+        );
+      }
       return (
         <div>
           {result.map(item => {
-            return <div key={item.id}>{item.show.name}</div>;
+            return <div key={item.show.id}>{item.show.name}</div>;
           })}
         </div>
       );
@@ -44,11 +62,34 @@ const Home = () => {
         onChange={onTextChange}
         onKeyDown={onKeyDown}
         value={input}
+        placeholder="Shows/Actors"
       />
       {/* when i press the input key on the input element then onKeyDown event will fire */}
       <button type="button" onClick={onSearch}>
         Search
       </button>
+      <div>
+        <label>
+          Shows
+          <input
+            type="radio"
+            value="shows"
+            name="shows"
+            onChange={onRadioChange}
+            checked={isShow}
+          />
+        </label>
+        <label htmlFor="">
+          People
+          <input
+            type="radio"
+            value="people"
+            name="people"
+            onChange={onRadioChange}
+            checked={!isShow}
+          />
+        </label>
+      </div>
       {renderResults()}
     </MainPageLayout>
   );
