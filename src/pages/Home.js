@@ -9,7 +9,6 @@ const Home = () => {
   const [searchOption, setSearchOption] = useState('shows');
 
   const isShow = searchOption === 'shows';
-
   const onTextChange = ev => {
     // console.log(ev);
     setInput(ev.target.value);
@@ -59,9 +58,10 @@ const Home = () => {
         Search
       </button>
       <div>
-        <label>
+        <label htmlFor="search_option_show">
           Shows
           <input
+            id="search_option_show"
             type="radio"
             value="shows"
             name="shows"
@@ -69,9 +69,10 @@ const Home = () => {
             checked={isShow}
           />
         </label>
-        <label htmlFor="">
+        <label htmlFor="search_option_people">
           People
           <input
+            id="search_option_people"
             type="radio"
             value="people"
             name="people"
