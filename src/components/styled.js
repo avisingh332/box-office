@@ -34,12 +34,15 @@ const SearchCard = styled.div`
     margin: 0;
   }
 `;
-
+// for setting style dynamically we use ${ }syntax which recieves a callback function with props as argument
+// for Ex we use for background color in below case
 const Star = styled.div`
   display: inline-block;
   width: 18px;
   height: 18px;
-  background-color: #ffc806;
+  background-color: ${props => {
+    return props.active ? '#ffc806' : '#F8EDE3';
+  }};
   clip-path: polygon(
     50% 0%,
     61% 35%,
