@@ -14,7 +14,7 @@ const SearchCard = styled.div`
   .img-wrapper {
     width: 100%;
     border-radius: 40px;
-    height: 350px;
+    height: 420px;
     overflow: hidden;
     border: 1px solid #ddd;
 
@@ -34,6 +34,7 @@ const SearchCard = styled.div`
     margin: 0;
   }
 `;
+
 const Star = styled.div`
   display: inline-block;
   width: 18px;
