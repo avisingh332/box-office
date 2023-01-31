@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 
 function showReduce(prevState, action) {
   switch (action.type) {
@@ -28,4 +28,19 @@ function usePersistenceReducer(reducer, key) {
 
 export function useShows() {
   return usePersistenceReducer(showReduce, 'shows');
+}
+
+//  his cutom hook is for modifying the useState hook we wanted the input query string to persist in the session storage so
+export function useLastQuery(key = 'lastQuery') {
+  const [input, setInput] = useState(() => {
+    const persisted = sessionStorage.getItem(key);
+    return persisted ? JSON.parse(persisted) : '';
+  });
+  //  this the custom function for setting the input because setInput will just set the input value but
+  //  wouldn't update it in the sessions storages
+  const setPersistedInput = newInput => {
+    setInput(newInput);
+    sessionStorage.setItem(key, JSON.stringify(newInput));
+  };
+  return [input, setPersistedInput];
 }
