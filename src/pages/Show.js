@@ -28,11 +28,14 @@ const Show = () => {
     reduce,
     initialState
   );
+  // const dataOfParam = useParams();
   const { id } = useParams();
   // const [show, setShow] = useState(null);
   // const [isLoading, setIsLoading] = useState(true);
   // const [error, setError] = useState(null);
   useEffect(() => {
+    // console.log('id is ', id);
+    // console.log('Data is ', dataOfParam);
     // https://api.tvmaze.com/shows/1?embed[]=episodes&embed[]=cast
     apiGet(`/shows/${id}?embed[]=seasons&embed[]=cast`)
       .then(result => {

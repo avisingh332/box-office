@@ -1,5 +1,6 @@
 import { useEffect, useReducer } from 'react';
-function reduce(prevState, action) {
+
+function showReduce(prevState, action) {
   switch (action.type) {
     case 'ADD': {
       return [...prevState, action.showId];
@@ -13,8 +14,9 @@ function reduce(prevState, action) {
       return prevState;
   }
 }
-export function usePersistenceReducer(key = 'shows') {
-  const [state, dispatch] = useReducer(reduce, [], initial => {
+
+function usePersistenceReducer(reducer, key) {
+  const [state, dispatch] = useReducer(reducer, [], initial => {
     const persisted = localStorage.getItem(key);
     return persisted ? JSON.parse(persisted) : initial;
   });
@@ -22,4 +24,8 @@ export function usePersistenceReducer(key = 'shows') {
     localStorage.setItem(key, JSON.stringify(state));
   }, [state, key]);
   return [state, dispatch];
+}
+
+export function useShows() {
+  return usePersistenceReducer(showReduce, 'shows');
 }

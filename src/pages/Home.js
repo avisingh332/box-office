@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ActorGrid from '../components/actors/ActorGrid';
-import MainPageLayout from '../components/MainPageLayout';
+// import MainPageLayout from '../components/MainPageLayout';
+import Navs from '../components/Navs';
 import ShowGrid from '../components/shows/ShowGrid';
 import { apiGet } from '../misc/config';
 const Home = () => {
@@ -9,6 +10,13 @@ const Home = () => {
   const [searchOption, setSearchOption] = useState('shows');
 
   const isShow = searchOption === 'shows';
+  const onSearch = () => {
+    // https://api.tvmaze.com/search/shows?q=girls
+    apiGet(`/search/${searchOption}?q=${input}`).then(res => {
+      setResult(res);
+      // console.log(res);
+    });
+  };
   const onTextChange = ev => {
     // console.log(ev);
     setInput(ev.target.value);
@@ -19,13 +27,7 @@ const Home = () => {
     setResult(null);
     setSearchOption(ev.target.value);
   };
-  const onSearch = () => {
-    // https://api.tvmaze.com/search/shows?q=girls
-    apiGet(`/search/${searchOption}?q=${input}`).then(res => {
-      setResult(res);
-      console.log(res);
-    });
-  };
+
   const onKeyDown = ev => {
     if (ev.keyCode === 13) {
       onSearch();
@@ -45,7 +47,8 @@ const Home = () => {
   };
 
   return (
-    <MainPageLayout>
+    <div>
+      <Navs />
       <input
         type="text"
         onChange={onTextChange}
@@ -82,7 +85,7 @@ const Home = () => {
         </label>
       </div>
       {renderResults()}
-    </MainPageLayout>
+    </div>
   );
 };
 

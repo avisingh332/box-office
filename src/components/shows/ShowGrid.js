@@ -1,10 +1,12 @@
 import React from 'react';
 import ShowCard from './ShowCard';
 import IMG_NOT_FOUND from '../../images/not-found.png';
-import { usePersistenceReducer } from '../../misc/custom-hooks';
+import { useShows } from '../../misc/custom-hooks';
 import { FlexGrid } from '../styled';
+
 const ShowGrid = ({ data }) => {
-  const [starredState, dispatch] = usePersistenceReducer();
+  const [starredState, dispatch] = useShows();
+  // console.log('Result:  ', starredState);
   return (
     <FlexGrid>
       {data.map(({ show }) => {
@@ -16,6 +18,7 @@ const ShowGrid = ({ data }) => {
             dispatch({ type: 'ADD', showId: show.id });
           }
         };
+
         return (
           <ShowCard
             key={show.id}
