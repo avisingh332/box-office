@@ -1,54 +1,26 @@
 /* eslint no-underscore-dangle: 0 */
-import React, { useEffect, useReducer } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import Cast from '../components/shows/Cast';
 import Details from '../components/shows/Details';
 import Seasons from '../components/shows/Seasons';
 import ShowMainData from '../components/shows/ShowMainData';
-import { apiGet } from '../misc/config';
+// import { apiGet } from '../misc/config';
+import { ShowDetails } from '../misc/custom-hooks';
 import { InfoBlock, ShowPageWrapper } from './Show.styled';
 
-const initialState = {
-  show: null,
-  isLoading: true,
-  error: null,
-};
-function reduce(prevState, action) {
-  switch (action.type) {
-    case 'FETCH_SUCCESSFUL':
-      return { ...prevState, isLoading: false, show: action.show };
-    case 'FETCH_UNSUCCESSFUL':
-      return { ...prevState, isLoading: false, error: action.error };
-    default:
-      return prevState;
-  }
-}
 const Show = () => {
-  const [{ show, isLoading, error }, dispatch] = useReducer(
-    reduce,
-    initialState
-  );
-  // const dataOfParam = useParams();
   const { id } = useParams();
+  const { show, isLoading, error } = ShowDetails(id);
+  // console.log('Loading: ', isLoading);
+
+  // const show = testObj.show;
+  // const isLoading = testObj.isLoading;
+  // const error = testObj.error;
+
   // const [show, setShow] = useState(null);
   // const [isLoading, setIsLoading] = useState(true);
   // const [error, setError] = useState(null);
-  useEffect(() => {
-    // console.log('id is ', id);
-    // console.log('Data is ', dataOfParam);
-    // https://api.tvmaze.com/shows/1?embed[]=episodes&embed[]=cast
-    apiGet(`/shows/${id}?embed[]=seasons&embed[]=cast`)
-      .then(result => {
-        // setShow(result);
-        // setIsLoading(false);
-        dispatch({ type: 'FETCH_SUCCESSFUL', show: result });
-      })
-      .catch(err => {
-        // setError(err.message);
-        // setIsLoading(false);
-        dispatch({ type: 'FETCH_UNSUCCESSFUL', error: err });
-      });
-  }, [id]);
 
   if (isLoading) {
     return <div>Data is loading </div>;
@@ -59,7 +31,6 @@ const Show = () => {
 
   return (
     <ShowPageWrapper>
-      {console.log(show)}
       <ShowMainData
         image={show.image}
         name={show.name}

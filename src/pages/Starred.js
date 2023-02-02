@@ -17,8 +17,11 @@ const Starred = () => {
 
   useEffect(() => {
     if (starredShows.length > 0 && starredShows) {
+      // we are defining an array of promises for the apicalls for every showId and extract information
       const promises = starredShows.map(showId => apiGet(`/shows/${showId}`));
-      Promise.all(promises)
+      Promise.all(promises) //  Promise.all wil succeed if every promise produced a value
+        // in the below statement we are receving apiData which is an array of
+        // objects where each object contain result of api query for each show id
         .then(apiData => apiData.map(show => ({ show })))
         .then(r => {
           setResult(r);

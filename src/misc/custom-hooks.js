@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useState } from 'react';
-
+import { apiGet } from './config';
 function showReduce(prevState, action) {
   switch (action.type) {
     case 'ADD': {
@@ -30,7 +30,7 @@ export function useShows() {
   return usePersistenceReducer(showReduce, 'shows');
 }
 
-//  his cutom hook is for modifying the useState hook we wanted the input query string to persist in the session storage so
+//  This cutom hook is for modifying the useState hook we wanted the input query string to persist in the session storage so
 export function useLastQuery(key = 'lastQuery') {
   const [input, setInput] = useState(() => {
     const persisted = sessionStorage.getItem(key);
@@ -43,4 +43,42 @@ export function useLastQuery(key = 'lastQuery') {
     sessionStorage.setItem(key, JSON.stringify(newInput));
   };
   return [input, setPersistedInput];
+}
+
+function reduce(prevState, action) {
+  switch (action.type) {
+    case 'FETCH_SUCCESSFUL':
+      return { ...prevState, isLoading: false, show: action.show };
+    case 'FETCH_UNSUCCESSFUL':
+      return { ...prevState, isLoading: false, error: action.error };
+    default:
+      return prevState;
+  }
+}
+//  this custom hook is use for maintaining the states of the show.js which are isLoading , error and show
+export function ShowDetails(showId) {
+  const [state, dispatch] = useReducer(reduce, {
+    show: null,
+    isLoading: true,
+    error: null,
+  });
+
+  useEffect(() => {
+    // https://api.tvmaze.com/shows/1?embed[]=episodes&embed[]=cast
+    apiGet(`/shows/${showId}?embed[]=seasons&embed[]=cast`)
+      .then(result => {
+        // setShow(result);
+        // setIsLoading(false);
+        // console.log('Result', result);
+        dispatch({ type: 'FETCH_SUCCESSFUL', show: result });
+      })
+      .catch(err => {
+        // setError(err.message);
+        // setIsLoading(false);
+        // console.log('Error', err);
+        dispatch({ type: 'FETCH_UNSUCCESSFUL', error: err });
+      });
+  }, [showId]);
+
+  return state;
 }
