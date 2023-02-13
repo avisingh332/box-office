@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import ActorGrid from '../components/actors/ActorGrid';
+import CustomRadio from '../components/CustomRadio';
 import MainPageLayout from '../components/MainPageLayout';
 import ShowGrid from '../components/shows/ShowGrid';
 import { apiGet } from '../misc/config';
 import { useLastQuery } from '../misc/custom-hooks';
+import {
+  RadioInputsWrapper,
+  SearchButtonWrapper,
+  SearchInput,
+} from './Home.styled';
 const Home = () => {
   const [input, setInput] = useLastQuery('lastQuery');
   const [result, setResult] = useState(null);
@@ -48,7 +54,7 @@ const Home = () => {
 
   return (
     <MainPageLayout>
-      <input
+      <SearchInput
         type="text"
         onChange={onTextChange}
         onKeyDown={onKeyDown}
@@ -56,11 +62,27 @@ const Home = () => {
         placeholder="Shows/Actors"
       />
       {/* when i press the input key on the input element then onKeyDown event will fire */}
-      <button type="button" onClick={onSearch}>
-        Search
-      </button>
-      <div>
-        <label htmlFor="search_option_show">
+
+      <RadioInputsWrapper>
+        <div>
+          <CustomRadio
+            label="Shows"
+            id="search_option_show"
+            value="shows"
+            onChange={onRadioChange}
+            checked={isShow}
+          />
+        </div>
+        <div>
+          <CustomRadio
+            label="Actors"
+            id="search_option_people"
+            value="people"
+            onChange={onRadioChange}
+            checked={!isShow}
+          />
+        </div>
+        {/* <label htmlFor="search_option_show">
           Shows
           <input
             id="search_option_show"
@@ -70,8 +92,8 @@ const Home = () => {
             onChange={onRadioChange}
             checked={isShow}
           />
-        </label>
-        <label htmlFor="search_option_people">
+        </label> */}
+        {/* <label htmlFor="search_option_people">
           People
           <input
             id="search_option_people"
@@ -81,8 +103,13 @@ const Home = () => {
             onChange={onRadioChange}
             checked={!isShow}
           />
-        </label>
-      </div>
+        </label> */}
+      </RadioInputsWrapper>
+      <SearchButtonWrapper>
+        <button type="button" onClick={onSearch}>
+          Search
+        </button>
+      </SearchButtonWrapper>
       {renderResults()}
     </MainPageLayout>
   );
