@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import ActorGrid from '../components/actors/ActorGrid';
-// import MainPageLayout from '../components/MainPageLayout';
-import Navs from '../components/Navs';
+import MainPageLayout from '../components/MainPageLayout';
 import ShowGrid from '../components/shows/ShowGrid';
 import { apiGet } from '../misc/config';
 import { useLastQuery } from '../misc/custom-hooks';
@@ -48,8 +47,7 @@ const Home = () => {
   };
 
   return (
-    <div>
-      <Navs />
+    <MainPageLayout>
       <input
         type="text"
         onChange={onTextChange}
@@ -86,7 +84,7 @@ const Home = () => {
         </label>
       </div>
       {renderResults()}
-    </div>
+    </MainPageLayout>
   );
 };
 
