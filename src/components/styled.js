@@ -1,7 +1,6 @@
-import FadeIn from 'react-fade-in';
 import styled from 'styled-components';
 
-const FlexGrid = styled(FadeIn)`
+const FlexGrid = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
