@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import ActorCard from './ActorCard';
 import IMG_NOT_FOUND from '../../images/not-found.png';
 import { FlexGrid } from '../styled';
@@ -23,4 +23,4 @@ const ActorGrid = ({ data }) => {
   );
 };
 
-export default ActorGrid;
+export default memo(ActorGrid);

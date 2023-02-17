@@ -7,7 +7,6 @@ import { useShows } from '../misc/custom-hooks';
 // import MainPageLayout from '../components/MainPageLayout';
 
 const Starred = () => {
-  // return <div>This is starred page</div>;
   const [starredShows] = useShows();
 
   // console.log('Ids of starred shows', starredShows);

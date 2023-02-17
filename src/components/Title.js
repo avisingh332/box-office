@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { TitleWrapper } from './Title.styled';
 
-const Title = ({ title, subtitle }) => {
+const Title = () => {
+  // console.log('Rendered');
   return (
     <TitleWrapper>
-      <h1>{title}</h1>
-      <p>{subtitle}</p>
+      <h1>Box Office</h1>
+      <p>This is a Box Office Application </p>
     </TitleWrapper>
   );
 };
 
-export default Title;
+export default memo(Title);
